@@ -1,32 +1,51 @@
-import 'dart:ffi';
-
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ylyl/models/firestore/joke.dart';
+import 'package:ylyl/models/firestore/player.dart';
 
-@immutable
 class Game {
-  Game({
-    required this.code,
-    required this.status,
-    required this.jokes,
-  });
-
-  Game.fromJson(Map<String, Object?> json)
-      : this(
-          code: json['code']! as String,
-          status: json['status'] as Bool,
-          jokes: json['jokes'] as List<String>,
-        );
-
+  String id;
   final String code;
-  final Bool status;
-  final List<String> jokes;
+  final String status;
+  final List<Joke> jokes;
+  final int round;
+  final String owner;
+  List<Player> players;
+  DocumentReference reference;
 
-  Map<String, Object?> toJson() {
+  Game(this.code, this.status, this.jokes, this.round, this.owner, this.players);
+
+  Game.fromMap(Map<String, dynamic> map, {this.reference})
+      : assert(map['code'] != null),
+        assert(map['status'] != null),
+        assert(map['owner'] != null),
+        id = map['id'],
+        code = map['code'],
+        status = map['status'],
+        round = map['round'],
+        owner = map['owner'],
+        jokes = map['jokes'];
+
+  Map<String, dynamic> toMap() {
+    List<Map<String, dynamic>> plrs = [];
+    for (var p in players) {
+      plrs.add(p.toMap());
+    }
+
+    List<Map<String, dynamic>> jks = [];
+    for (var j in jokes) {
+      jks.add(j.toMap());
+    }
+
     return {
+      'id': id,
       'code': code,
-      'status': status,
+      'name': status,
+      'owner': owner,
+      'players': plrs,
       'jokes': jokes,
+      'round': round,
     };
   }
+
+  Game.fromSnapshot(DocumentSnapshot snapshot) : this.fromMap(snapshot.data(), reference: snapshot.reference);
 }
