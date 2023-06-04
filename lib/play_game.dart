@@ -3,7 +3,7 @@ import 'package:ylyl/models/firestore/game.dart';
 import 'package:ylyl/services/game_service.dart';
 
 class PlayGame extends StatefulWidget {
-  const PlayGame({Key key, this.code}) : super(key: key);
+  const PlayGame({Key? key, required this.code}) : super(key: key);
 
   final String code;
 
@@ -12,7 +12,7 @@ class PlayGame extends StatefulWidget {
 }
 
 class _PlayGameState extends State<PlayGame> {
-  Game _game;
+  Game? _game;
 
   @override
   void initState() async {
@@ -27,16 +27,16 @@ class _PlayGameState extends State<PlayGame> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _game.status == "writing"
-          ? Column(
-              children: const [
+      body: _game!.status == "writing"
+          ? const Column(
+              children: [
                 Center(
                   child: Text("Game playing - writing"),
                 )
               ],
             )
-          : Column(
-              children: const [
+          : const Column(
+              children: [
                 Center(
                   child: Text("Game playing - reading"),
                 ),

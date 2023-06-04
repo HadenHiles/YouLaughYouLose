@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Player {
-  String id;
+  String? id;
   final String name;
-  DocumentReference reference;
+  DocumentReference? reference;
 
   Player(this.name);
 
-  Player.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['date'] != null),
-        assert(map['type'] != null),
-        assert(map['count'] != null),
-        id = map['id'],
+  Player.fromMap(Map<String, dynamic>? map, {this.reference})
+      : assert(map!['date'] != null),
+        assert(map!['type'] != null),
+        assert(map!['count'] != null),
+        id = map!['id'],
         name = map['name'];
 
   Map<String, dynamic> toMap() {
@@ -21,5 +21,5 @@ class Player {
     };
   }
 
-  Player.fromSnapshot(DocumentSnapshot snapshot) : this.fromMap(snapshot.data(), reference: snapshot.reference);
+  Player.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) : this.fromMap(snapshot.data(), reference: snapshot.reference);
 }

@@ -3,8 +3,8 @@ import 'package:random_string/random_string.dart';
 import 'package:ylyl/models/firestore/game.dart';
 import 'package:ylyl/models/firestore/player.dart';
 
-Future<Player> newPlayer(String name) {
-  Player player = Player(name);
+Future<Player> newPlayer(String? name) {
+  Player player = Player(name!);
 
   return FirebaseFirestore.instance.collection('players').doc().get().then((snapshot) {
     if (!snapshot.exists) {
@@ -14,11 +14,11 @@ Future<Player> newPlayer(String name) {
   });
 }
 
-Future<Game> startGame(String owner) {
+Future<Game?> startGame(String? owner) {
   String code = randomAlpha(5);
   return FirebaseFirestore.instance.collection('games').doc().get().then((snapshot) {
     if (!snapshot.exists) {
-      Game game = Game(code, 'writing', [], 1, owner, []);
+      Game game = Game(code, 'writing', [], 1, owner!, []);
       FirebaseFirestore.instance.collection('games').doc(snapshot.id).set(game.toMap());
 
       return game;
@@ -28,7 +28,7 @@ Future<Game> startGame(String owner) {
   });
 }
 
-Future<Game> getGame(String code) {
+Future<Game?> getGame(String code) {
   return FirebaseFirestore.instance.collection('games').where('code', isEqualTo: code).limit(1).get().then((snapshot) {
     if (snapshot.docs.isNotEmpty) {
       return Game.fromSnapshot(snapshot.docs[0]);

@@ -3,22 +3,22 @@ import 'package:ylyl/models/firestore/joke.dart';
 import 'package:ylyl/models/firestore/player.dart';
 
 class Game {
-  String id;
+  String? id;
   final String code;
   final String status;
   final List<Joke> jokes;
   final int round;
   final String owner;
-  List<Player> players;
-  DocumentReference reference;
+  List<Player>? players;
+  DocumentReference? reference;
 
   Game(this.code, this.status, this.jokes, this.round, this.owner, this.players);
 
-  Game.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['code'] != null),
-        assert(map['status'] != null),
-        assert(map['owner'] != null),
-        id = map['id'],
+  Game.fromMap(Map<String, dynamic>? map, {required this.reference})
+      : assert(map!['code'] != null),
+        assert(map!['status'] != null),
+        assert(map!['owner'] != null),
+        id = map!['id'],
         code = map['code'],
         status = map['status'],
         round = map['round'],
@@ -27,7 +27,7 @@ class Game {
 
   Map<String, dynamic> toMap() {
     List<Map<String, dynamic>> plrs = [];
-    for (var p in players) {
+    for (var p in players!) {
       plrs.add(p.toMap());
     }
 
@@ -47,5 +47,5 @@ class Game {
     };
   }
 
-  Game.fromSnapshot(DocumentSnapshot snapshot) : this.fromMap(snapshot.data(), reference: snapshot.reference);
+  Game.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) : this.fromMap(snapshot.data(), reference: snapshot.reference);
 }

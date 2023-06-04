@@ -3,7 +3,7 @@ import 'package:ylyl/play_game.dart';
 import 'package:ylyl/services/game_service.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -11,8 +11,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _playerNameFieldController = TextEditingController();
-  String _playerId;
-  String _playerName;
+  late String? _playerId;
+  late String? _playerName;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.of(context).pushReplacement(MaterialPageRoute(
                               builder: (BuildContext context) {
                                 return PlayGame(
-                                  code: g.code,
+                                  code: g!.code,
                                 );
                               },
                             ));
