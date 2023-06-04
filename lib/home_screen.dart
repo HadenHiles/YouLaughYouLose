@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'package:flutter/material.dart';
 import 'package:ylyl/play_game.dart';
 import 'package:ylyl/services/game_service.dart';
