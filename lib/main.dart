@@ -6,7 +6,7 @@ void main() {
 }
 
 class YLYL extends StatelessWidget {
-  const YLYL({Key key}) : super(key: key); //i hate niggers
+  const YLYL({Key? key}) : super(key: key); //i hate niggers
 
   // This widget is the root of your application.
   @override
