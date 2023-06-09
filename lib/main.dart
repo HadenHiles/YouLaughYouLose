@@ -1,8 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ylyl/home_screen.dart';
+// import 'package:ylyl/services/bootstrap.dart';
+
+const firebaseConfig = FirebaseOptions(
+  apiKey: "AIzaSyC3ayfGqwZb-6vICGswSQA702UseURZgpA",
+  authDomain: "ylyl-youlaughyoulose.firebaseapp.com",
+  projectId: "ylyl-youlaughyoulose",
+  storageBucket: "ylyl-youlaughyoulose.appspot.com",
+  messagingSenderId: "625378474529",
+  appId: "1:625378474529:web:9eccee761dc0ed16e30160",
+);
 
 void main() {
+  Firebase.initializeApp(options: firebaseConfig);
   runApp(const YLYL());
+  // bootstrap();
 }
 
 class YLYL extends StatelessWidget {
@@ -12,7 +25,7 @@ class YLYL extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'You Laugh You Lose',
+      title: 'Straight Face',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -25,7 +38,14 @@ class YLYL extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.deepPurple,
       ),
-      home: const HomeScreen(),
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blueAccent,
+          title: const Text('Straight Face'),
+          centerTitle: true,
+        ),
+        body: const HomeScreen(),
+      ),
     );
   }
 }

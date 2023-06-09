@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Player {
   String? id;
-  final String name;
+  late String name;
   DocumentReference? reference;
 
   Player(this.name);
@@ -19,6 +19,10 @@ class Player {
       'id': id,
       'name': name,
     };
+  }
+
+  void setName(String n) {
+    name = n;
   }
 
   Player.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) : this.fromMap(snapshot.data(), reference: snapshot.reference);

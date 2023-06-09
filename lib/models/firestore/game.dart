@@ -8,21 +8,18 @@ class Game {
   final String status;
   final List<Joke> jokes;
   final int round;
-  final String owner;
   List<Player>? players;
   DocumentReference? reference;
 
-  Game(this.code, this.status, this.jokes, this.round, this.owner, this.players);
+  Game(this.code, this.status, this.jokes, this.round, this.players);
 
   Game.fromMap(Map<String, dynamic>? map, {required this.reference})
       : assert(map!['code'] != null),
         assert(map!['status'] != null),
-        assert(map!['owner'] != null),
         id = map!['id'],
         code = map['code'],
         status = map['status'],
         round = map['round'],
-        owner = map['owner'],
         jokes = map['jokes'];
 
   Map<String, dynamic> toMap() {
@@ -39,8 +36,7 @@ class Game {
     return {
       'id': id,
       'code': code,
-      'name': status,
-      'owner': owner,
+      'status': status,
       'players': plrs,
       'jokes': jokes,
       'round': round,

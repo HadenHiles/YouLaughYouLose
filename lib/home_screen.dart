@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
-
 import 'package:flutter/material.dart';
 import 'package:ylyl/play_game.dart';
-import 'package:ylyl/services/game_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,75 +10,43 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController _playerNameFieldController = TextEditingController();
-  late String? _playerId;
-  late String? _playerName;
-
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        MaterialButton(
-          child: const Text('Start Game'),
-          onPressed: _startGame,
+        Center(
+          child: MaterialButton(
+            color: Colors.blueAccent,
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            child: const Text(
+              'New Game',
+              style: TextStyle(fontSize: 22, color: Colors.white),
+            ),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+                return const PlayGame();
+              }));
+            },
+          ),
         ),
-        MaterialButton(
-          child: const Text('Join Game'),
-          onPressed: () {},
+        const Divider(
+          height: 10,
+          color: Colors.transparent,
+        ),
+        Center(
+          child: MaterialButton(
+            color: Colors.grey,
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            child: const Text(
+              'Join Game',
+              style: TextStyle(fontSize: 22, color: Colors.white),
+            ),
+            onPressed: () {},
+          ),
         ),
       ],
-    );
-  }
-
-  void _startGame() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Enter your name'),
-          content: TextField(
-            onChanged: (value) {
-              setState(() {
-                _playerName = value;
-              });
-            },
-            controller: _playerNameFieldController,
-            decoration: const InputDecoration(hintText: "Enter your name, fuckwit."),
-          ),
-          actions: [
-            ElevatedButton(
-              child: const Text('CANCEL'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            ElevatedButton(
-              child: const Text('GO YO'),
-              onPressed: () {
-                Navigator.pop(context);
-
-                newPlayer(_playerName).then((p) => () {
-                      setState(() {
-                        _playerId = p.id;
-                      });
-
-                      startGame(_playerId).then((g) => () {
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return PlayGame(
-                                  code: g!.code,
-                                );
-                              },
-                            ));
-                          });
-                    });
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }
